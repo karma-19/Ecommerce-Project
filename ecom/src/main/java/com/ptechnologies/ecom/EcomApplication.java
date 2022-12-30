@@ -1,5 +1,6 @@
 package com.ptechnologies.ecom;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,15 @@ import javax.sql.DataSource;
 @SpringBootApplication
 public class EcomApplication {
 
+	@Value("${spring.datasource.driver-class-name}")
+	private String driverClassName;
+	@Value("${spring.datasource.url}")
+	private String url;
+	@Value("${spring.datasource.username}")
+	private String username;
+	@Value("${spring.datasource.password}")
+	private String password;
+
 	public static void main(String[] args) {
 		SpringApplication.run(EcomApplication.class, args);
 	}
@@ -19,10 +29,10 @@ public class EcomApplication {
 	@Bean
 	public JdbcTemplate getJdbcTemplate() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/ecom");
-		dataSource.setUsername("root");
-		dataSource.setPassword("spg11063");
+		dataSource.setDriverClassName(driverClassName);
+		dataSource.setUrl(url);
+		dataSource.setUsername(username);
+		dataSource.setPassword(password);
 		return new JdbcTemplate(dataSource);
 	}
 
